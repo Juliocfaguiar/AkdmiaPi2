@@ -36,8 +36,8 @@ def cad():
             data = datetime.date.today()
 
             ctrl = Controle(cadastro=cadastro, data=data, pag=False)
-            logg = Controle(usuario = usuario, senha = senha)
-            db.session.add(ctrl,logg)
+            # logg = Controle(usuario = usuario, senha = senha)
+            db.session.add(ctrl)#,logg)
             db.session.commit()
 
 
@@ -59,6 +59,7 @@ def log():
 @app.route('/logout')
 def logout():
     session ['usuario_logado'] = None
+    
     return  redirect('/')
 
 
@@ -66,12 +67,30 @@ def logout():
 
 @app.route('/autenticar',methods=['POST',])
 def autenticar():
-
-   if request.form['usuario'] in Usuarios:
-        users = Usuarios[request.form['usuario']]
-        if request.form['senha'] == users.senha:
-            session['usuario_logado'] = users.usuario
-        return  redirect ('/admlog')
+    # Output a message if something goes wrong...
+    msg = ''
+    # Checa se o "usuario" e "senha" POST realmente existe
+    if request.method == 'POST' and 'usuario' in request.form and 'senha' in request.form:
+        # Cria variável de acesso rárido
+        usuario = request.form['usuario']
+        senha = request.form['senha']
+        # Checa se a conta existe no Mysql
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (usuario, senha,))
+        account = cursor.fetchone()
+        # If account exists in accounts table in out database
+        if account:
+            # Create session data, we can access this data in other routes
+            session['loggedin'] = True
+            session['id'] = account['id']
+            session['usuario'] = account['usuario']
+            # Redirect to home page
+            return 'Logado com sucesso !'
+        else:
+            # Account doesnt exist or username/password incorrect
+            msg = 'Usuario ou Senha incorretos !'
+    # Show the login form with message (if any)
+    return render_template('index.html', msg=msg)
 
 @app.route('/aluno_log')
 def allog():

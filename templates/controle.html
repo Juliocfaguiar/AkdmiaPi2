@@ -4,23 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>controle</title>
-      <link rel="stylesheet" href="../static/bootstrap.css">
+
   </head>
   <body>
         <h1> Controle de Alunos</h1>
+              <link rel="stylesheet" href="../static/bootstrap.css">
         <hr>
         <div>
             <tr>
-                <button><a href="/" class="btn btn-primary" type="submit">Voltar</a></button>
+                <a href="/" class="btn btn-primary" type="submit">Voltar</a>
             </tr>
             <tr>
-                <button><a href="/cadastro" class="btn btn-primary" type="submit">cadastrar</a></button>
+                <a href="/cadastro" class="btn btn-primary" type="submit">cadastrar</a>
             </tr>
         </div>
 
-        <table border="1">
-            <thead>
-            <tr>
+            <table>
+                <thead>
+                <tr>
 
                 <td>Nome</td>
                 <td>N_Contato</td>
@@ -28,21 +29,19 @@
                 <td>data</td>
                 <td>pag</td>
 
-            </tr>
-            </thead>
+                </tr>
+                </thead>
 
-            {% for Cadastro in cads %}
-            <tr>
-                <td>{{Cadastro.nome}}</td>
-                <td>{{Cadastro.n_contato}}</td>
-                <td>{{Cadastro.dia_de_pag}}</td>
-                <td>{{Cadastro.data}}</td>
-                <td>{{Cadastro.pag}}</td>
-
-
-            </tr>
-            {% endfor %}
-        </table>
+                {% for Cadastro in cads %}
+                <tr>
+                    <td>{{Cadastro.nome}}</td>
+                    <td>{{Cadastro.n_contato}}</td>
+                    <td>{{Cadastro.dia_de_pag}}</td>
+                    <td>{{Cadastro.data}}</td>
+                    <td>{{Cadastro.pag}}</td>
+                </tr>
+                {% endfor %}
+            </table>
 
   </body>
 </html>
