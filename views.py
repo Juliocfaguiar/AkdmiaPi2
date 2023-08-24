@@ -59,7 +59,7 @@ def log():
 @app.route('/logout')
 def logout():
     session ['usuario_logado'] = None
-    
+
     return  redirect('/')
 
 
@@ -90,7 +90,7 @@ def autenticar():
             # Account doesnt exist or username/password incorrect
             msg = 'Usuario ou Senha incorretos !'
     # Show the login form with message (if any)
-    return render_template('index.html', msg=msg)
+    return render_template('aluno_log.html', msg=msg)
 
 @app.route('/aluno_log')
 def allog():
